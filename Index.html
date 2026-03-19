@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kalkulator PPh 21 gratis dan akurat untuk karyawan Indonesia. Menggunakan tarif terbaru UU HPP No. 7 Tahun 2021.">
+  <meta name="theme-color" content="#1a1a18">
+  <title>Kalkulator PPh 21 — PajakPintar.id</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       NAVIGASI
+  ════════════════════════════════════════════ -->
+  <nav>
+    <div class="logo">
+      <div class="logo-mark">P</div>
+      <span class="logo-name">Pajak<span>Pintar</span>.id</span>
+    </div>
+    <div class="nav-pill">PPh 21 · UU HPP 2022</div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════════ -->
+  <div class="hero">
+    <div class="hero-bg-text">PPh21</div>
+    <div class="hero-inner">
+      <div class="hero-tag">
+        <span>🇮🇩</span> Menggunakan Tarif Terbaru UU HPP No. 7 Tahun 2021
+      </div>
+      <h1>Hitung <em>PPh 21</em> Anda<br>Dalam Hitungan Detik</h1>
+      <p>Kalkulator pajak penghasilan karyawan yang akurat, transparan, dan mudah dipahami. Gratis, tanpa daftar.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════
+       KONTEN UTAMA
+  ════════════════════════════════════════════ -->
+  <main class="main">
+    <div class="layout">
+
+      <!-- ─── PANEL INPUT ─── -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-icon green">🧮</div>
+          <div class="card-head-text">
+            <h2>Data Wajib Pajak</h2>
+            <p>Isi semua data dengan lengkap</p>
+          </div>
+        </div>
+
+        <div class="card-body">
+
+          <!-- 01: PENGHASILAN -->
+          <div class="step-label">01 — Penghasilan</div>
+
+          <div class="field">
+            <label>
+              Gaji Pokok / Bulan
+              <span class="tooltip-wrap">
+                <button class="tooltip-btn" onclick="toggleTip(event,'tip-gaji')">?</button>
+                <span class="tooltip-bubble" id="tip-gaji">
+                  <strong>Gaji Pokok</strong> adalah penghasilan tetap yang Anda terima dari pemberi kerja setiap bulan, sebelum tunjangan dan potongan apapun. Masukkan angka kotor (gross).
+                </span>
+              </span>
+            </label>
+            <div class="input-wrap">
+              <span class="pfx">Rp</span>
+              <input type="text" class="has-pfx" id="gaji"
+                     placeholder="10.000.000" oninput="fmtRpInput(this)">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>
+              Tunjangan Tetap / Bulan
+              <span style="color:var(--ink3);font-weight:400;text-transform:none">(opsional)</span>
+              <span class="tooltip-wrap">
+                <button class="tooltip-btn" onclick="toggleTip(event,'tip-tunjangan')">?</button>
+                <span class="tooltip-bubble" id="tip-tunjangan">
+                  <strong>Tunjangan Tetap</strong> adalah tunjangan rutin setiap bulan tanpa syarat, seperti tunjangan jabatan, transportasi, atau makan tetap. Berbeda dengan tunjangan tidak tetap yang dihitung berdasarkan kehadiran.
+                </span>
+              </span>
+            </label>
+            <div class="input-wrap">
+              <span class="pfx">Rp</span>
+              <input type="text" class="has-pfx" id="tunjangan"
+                     placeholder="0" oninput="fmtRpInput(this)">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>
+              Bonus / THR Setahun
+              <span style="color:var(--ink3);font-weight:400;text-transform:none">(opsional)</span>
+              <span class="tooltip-wrap">
+                <button class="tooltip-btn" onclick="toggleTip(event,'tip-bonus')">?</button>
+                <span class="tooltip-bubble" id="tip-bonus">
+                  <strong>Bonus &amp; THR</strong> (Tunjangan Hari Raya) adalah penghasilan tidak rutin dalam setahun. Masukkan total akumulasi setahun. THR wajib min. 1× gaji pokok per UU No. 13/2003.
+                </span>
+              </span>
+            </label>
+            <div class="input-wrap">
+              <span class="pfx">Rp</span>
+              <input type="text" class="has-pfx" id="bonus"
+                     placeholder="0" oninput="fmtRpInput(this)">
+            </div>
+          </div>
+
+          <!-- 02: STATUS & PTKP -->
+          <div class="step-label" style="margin-top:1.25rem">02 — Status &amp; PTKP</div>
+
+          <div class="field">
+            <label>
+              Status Pernikahan
+              <span class="tooltip-wrap">
+                <button class="tooltip-btn" onclick="toggleTip(event,'tip-status')">?</button>
+                <span class="tooltip-bubble" id="tip-status">
+                  <strong>Status pernikahan</strong> menentukan besar PTKP. <strong>Kawin, Istri Kerja</strong> berarti suami-istri sama-sama bekerja dan memilih penghitungan pajak terpisah — PTKP-nya digabung (×2).
+                </span>
+              </span>
+            </label>
+            <div class="toggle-group">
+              <button class="toggle-btn active" onclick="setStatus('TK')">Tidak Kawin</button>
+              <button class="toggle-btn" onclick="setStatus('K')">Kawin</button>
+              <button class="toggle-btn" onclick="setStatus('K/I')">Kawin, Istri Kerja</button>
+            </div>
+          </div>
+
+          <div class="field" id="tanggunganField">
+            <label>
+              Jumlah Tanggungan
+              <span class="tooltip-wrap">
+                <button class="tooltip-btn" onclick="toggleTip(event,'tip-tanggungan')">?</button>
+                <span class="tooltip-bubble" id="tip-tanggungan">
+                  <strong>Tanggungan</strong> adalah anggota keluarga sedarah/semenda dalam garis keturunan lurus yang menjadi beban Anda, maks <strong>3 orang</strong>. Contoh: anak kandung, orang tua, atau adik yang belum bekerja.
+                </span>
+              </span>
+            </label>
+            <div class="slider-row">
+              <input type="range" min="0" max="3" value="0" id="tanggungan"
+                     step="1" oninput="updateTanggungan()">
+              <span class="slider-val" id="tanggungan-val">0 orang</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>
+              NPWP
+              <span class="tooltip-wrap">
+                <button class="tooltip-btn" onclick="toggleTip(event,'tip-npwp')">?</button>
+                <span class="tooltip-bubble" id="tip-npwp">
+                  <strong>NPWP</strong> (Nomor Pokok Wajib Pajak) wajib dimiliki pekerja berpenghasilan di atas PTKP. Tanpa NPWP, tarif PPh 21 Anda dikenakan <strong>lebih tinggi 20%</strong> dari tarif normal (Pasal 21 ayat 5a UU PPh).
+                </span>
+              </span>
+            </label>
+            <div class="toggle-group">
+              <button class="toggle-btn active" onclick="setNpwp(true)">Punya NPWP</button>
+              <button class="toggle-btn" onclick="setNpwp(false)">Tidak Punya</button>
+            </div>
+          </div>
+
+          <!-- 03: IURAN & POTONGAN -->
+          <div class="step-label" style="margin-top:1.25rem">03 — Iuran &amp; Potongan</div>
+
+          <div class="field-row">
+            <div class="field">
+              <label>
+                Iuran BPJS Kes.
+                <span class="tooltip-wrap">
+                  <button class="tooltip-btn" onclick="toggleTip(event,'tip-bpjskes')">?</button>
+                  <span class="tooltip-bubble" id="tip-bpjskes">
+                    <strong>BPJS Kesehatan</strong> — iuran karyawan sebesar <strong>1%</strong> dari gaji/bulan (standar). Perusahaan menanggung 4%. Dasar: Perpres No. 64 Tahun 2020. Iuran ini mengurangi PKP.
+                  </span>
+                </span>
+              </label>
+              <div class="input-wrap">
+                <input type="number" id="bpjsKes" class="has-sfx"
+                       value="1" min="0" max="5" step="0.5">
+                <span class="sfx">%</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>
+                Iuran BPJS TK JHT
+                <span class="tooltip-wrap">
+                  <button class="tooltip-btn" onclick="toggleTip(event,'tip-bpjstk')">?</button>
+                  <span class="tooltip-bubble" id="tip-bpjstk">
+                    <strong>BPJS Ketenagakerjaan – JHT</strong>: iuran karyawan <strong>2%</strong> dari gaji. Perusahaan 3.7%. Dasar: PP No. 46 Tahun 2015. Iuran ini juga mengurangi PKP Anda.
+                  </span>
+                </span>
+              </label>
+              <div class="input-wrap">
+                <input type="number" id="bpjsTK" class="has-sfx"
+                       value="2" min="0" max="5" step="0.5">
+                <span class="sfx">%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>
+              Iuran Pensiun / Bulan
+              <span style="color:var(--ink3);font-weight:400;text-transform:none">(opsional)</span>
+              <span class="tooltip-wrap">
+                <button class="tooltip-btn" onclick="toggleTip(event,'tip-pensiun')">?</button>
+                <span class="tooltip-bubble" id="tip-pensiun">
+                  <strong>Iuran Pensiun</strong> ke Dana Pensiun yang disahkan Menkeu, maks <strong>Rp 200.000/bulan</strong> yang dapat dikurangkan dari PKP. Dasar: Pasal 21 ayat (3) UU PPh.
+                </span>
+              </span>
+            </label>
+            <div class="input-wrap">
+              <span class="pfx">Rp</span>
+              <input type="text" class="has-pfx" id="pensiun"
+                     placeholder="0" oninput="fmtRpInput(this)">
+            </div>
+          </div>
+
+          <button class="btn-hitung" onclick="hitungPPh()">Hitung PPh 21 →</button>
+        </div>
+      </div><!-- /panel input -->
+
+      <!-- ─── PANEL HASIL ─── -->
+      <div class="card" id="resultCard">
+
+        <!-- Empty state -->
+        <div id="emptyState">
+          <div class="empty-state">
+            <span class="empty-icon">📋</span>
+            <p>Isi data penghasilan di sebelah kiri<br>dan tekan <strong>Hitung PPh 21</strong> untuk melihat<br>rincian pajak lengkap Anda.</p>
+          </div>
+        </div>
+
+        <!-- Hasil -->
+        <div id="resultContent" style="display:none">
+
+          <!-- Summary strip -->
+          <div class="summary-strip" id="summaryStrip"></div>
+
+          <!-- Result tabs -->
+          <div class="rtabs">
+            <button class="rtab active"  onclick="setRtab('ringkasan')">Ringkasan</button>
+            <button class="rtab"         onclick="setRtab('lapisan')">Lapisan Tarif</button>
+            <button class="rtab"         onclick="setRtab('ptkp')">Info PTKP</button>
+            <button class="rtab"         onclick="setRtab('tahunan')">Rekap Tahunan</button>
+          </div>
+
+          <!-- Tab: Ringkasan -->
+          <div class="rtab-pane active" id="pane-ringkasan">
+            <p class="sep">Perhitungan PKP</p>
+            <table class="pkp-table" id="pkpTable"></table>
+            <div class="chart-wrap">
+              <canvas id="chartDoughnut"></canvas>
+            </div>
+          </div>
+
+          <!-- Tab: Lapisan Tarif -->
+          <div class="rtab-pane" id="pane-lapisan">
+            <p class="sep">Tarif Progresif PPh 21 (UU HPP 2022)</p>
+            <div class="tarif-strip">
+              <div class="tarif-cell t5">
+                <div class="rate">5%</div>
+                <div class="range">s/d 60 jt</div>
+              </div>
+              <div class="tarif-cell t15">
+                <div class="rate">15%</div>
+                <div class="range">60–250 jt</div>
+              </div>
+              <div class="tarif-cell t25">
+                <div class="rate">25%</div>
+                <div class="range">250–500 jt</div>
+              </div>
+              <div class="tarif-cell t30">
+                <div class="rate">30%</div>
+                <div class="range">500 jt–5 M</div>
+              </div>
+              <div class="tarif-cell t35">
+                <div class="rate">35%</div>
+                <div class="range">&gt; 5 M</div>
+              </div>
+            </div>
+            <div class="bracket-wrap">
+              <table class="bracket-table">
+                <thead>
+                  <tr>
+                    <th>Lapisan PKP</th>
+                    <th>Tarif</th>
+                    <th>PKP di Lapisan</th>
+                    <th style="text-align:right">Pajak</th>
+                  </tr>
+                </thead>
+                <tbody id="bracketBody"></tbody>
+              </table>
+            </div>
+            <div class="info-note">
+              <strong>Catatan:</strong> Tarif berlaku sejak 1 Januari 2022 berdasarkan UU HPP No. 7 Tahun 2021.
+              Wajib pajak tanpa NPWP dikenakan tarif <strong>lebih tinggi 20%</strong> dari tarif normal.
+            </div>
+          </div>
+
+          <!-- Tab: Info PTKP -->
+          <div class="rtab-pane" id="pane-ptkp">
+            <p class="sep">Penghasilan Tidak Kena Pajak (PTKP) 2024</p>
+            <div class="bracket-wrap">
+              <table class="ptkp-table" id="ptkpTable"></table>
+            </div>
+            <div class="info-note" style="margin-top:1rem">
+              <strong>PTKP Anda:</strong>
+              <span id="ptkpSaya" style="color:var(--accent);font-weight:700"></span><br>
+              PTKP adalah batas penghasilan yang tidak dikenai pajak. Semakin besar tanggungan, semakin besar PTKP Anda.
+            </div>
+          </div>
+
+          <!-- Tab: Rekap Tahunan -->
+          <div class="rtab-pane" id="pane-tahunan">
+            <p class="sep">Rekap Penghasilan &amp; Pajak Setahun</p>
+            <button class="btn-export" onclick="window.print()">⬇ Export / Cetak PDF</button>
+            <div class="chart-wrap" style="height:220px">
+              <canvas id="chartBar"></canvas>
+            </div>
+            <table class="pkp-table" id="rekap12Table" style="margin-top:0.5rem"></table>
+          </div>
+
+        </div><!-- /resultContent -->
+      </div><!-- /panel hasil -->
+
+    </div><!-- /layout -->
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       SUMBER DATA & DASAR HUKUM
+  ════════════════════════════════════════════ -->
+  <section class="referensi-section">
+    <div class="referensi-card">
+      <div class="referensi-header">
+        <div class="referensi-header-icon">📚</div>
+        <div class="referensi-header-text">
+          <h3>Sumber Data &amp; Dasar Hukum</h3>
+          <p>Semua perhitungan mengacu pada peraturan perundang-undangan resmi Republik Indonesia</p>
+        </div>
+      </div>
+      <div class="referensi-body">
+        <div class="ref-grid">
+
+          <div class="ref-item">
+            <div class="ref-item-head">
+              <div class="ref-item-title">UU HPP No. 7 Tahun 2021</div>
+              <span class="ref-badge badge-uu">UU</span>
+            </div>
+            <div class="ref-item-desc">
+              Undang-Undang Harmonisasi Peraturan Perpajakan. Mengubah tarif PPh Orang Pribadi
+              menjadi 5 lapisan (5%–35%) dan menaikkan batas lapisan pertama dari Rp 50 jt
+              menjadi Rp 60 jt. Berlaku mulai 1 Januari 2022.
+            </div>
+            <a class="ref-link"
+               href="https://jdih.kemenkeu.go.id/fullText/2021/7TAHUN2021UU.pdf"
+               target="_blank" rel="noopener noreferrer">
+              <span class="ref-link-icon">↗</span> jdih.kemenkeu.go.id
+            </a>
+          </div>
+
+          <div class="ref-item" style="border-left-color: var(--gold)">
+            <div class="ref-item-head">
+              <div class="ref-item-title">PMK-101/PMK.010/2016</div>
+              <span class="ref-badge badge-pmk">PMK</span>
+            </div>
+            <div class="ref-item-desc">
+              Peraturan Menteri Keuangan tentang penyesuaian PTKP. Menetapkan PTKP dasar
+              Rp 54 juta/tahun untuk WP orang pribadi, dengan tambahan Rp 4,5 juta
+              per status dan per tanggungan.
+            </div>
+            <a class="ref-link"
+               href="https://jdih.kemenkeu.go.id/fullText/2016/101~PMK.010~2016Per.pdf"
+               target="_blank" rel="noopener noreferrer">
+              <span class="ref-link-icon">↗</span> jdih.kemenkeu.go.id
+            </a>
+          </div>
+
+          <div class="ref-item" style="border-left-color: var(--blue)">
+            <div class="ref-item-head">
+              <div class="ref-item-title">PER-16/PJ/2016 DJP</div>
+              <span class="ref-badge badge-per">PER</span>
+            </div>
+            <div class="ref-item-desc">
+              Peraturan Dirjen Pajak tentang tata cara pemotongan, penyetoran, dan pelaporan
+              PPh 21. Mengatur biaya jabatan 5% (maks Rp 500.000/bln atau Rp 6 juta/tahun)
+              sebagai pengurang PKP.
+            </div>
+            <a class="ref-link"
+               href="https://pajak.go.id/id/peraturan/perdirjen-pajak-nomor-per-16pj2016"
+               target="_blank" rel="noopener noreferrer">
+              <span class="ref-link-icon">↗</span> pajak.go.id
+            </a>
+          </div>
+
+          <div class="ref-item" style="border-left-color: var(--accent2)">
+            <div class="ref-item-head">
+              <div class="ref-item-title">Perpres No. 64 Tahun 2020</div>
+              <span class="ref-badge badge-pmk">Perpres</span>
+            </div>
+            <div class="ref-item-desc">
+              Peraturan Presiden tentang iuran BPJS Kesehatan. Iuran karyawan ditetapkan
+              sebesar 1% dari gaji/upah per bulan. Perusahaan menanggung 4%.
+              Iuran ini dapat dikurangkan dari penghasilan bruto.
+            </div>
+            <a class="ref-link"
+               href="https://jdih.kemenkeu.go.id/fullText/2020/64TAHUN2020PERPRES.pdf"
+               target="_blank" rel="noopener noreferrer">
+              <span class="ref-link-icon">↗</span> jdih.kemenkeu.go.id
+            </a>
+          </div>
+
+          <div class="ref-item" style="border-left-color: var(--accent-light)">
+            <div class="ref-item-head">
+              <div class="ref-item-title">PP No. 46 Tahun 2015 (JHT)</div>
+              <span class="ref-badge badge-per">PP</span>
+            </div>
+            <div class="ref-item-desc">
+              Peraturan Pemerintah tentang Jaminan Hari Tua BPJS Ketenagakerjaan.
+              Iuran karyawan 2%, perusahaan 3.7% dari upah sebulan.
+              Iuran JHT karyawan mengurangi Penghasilan Kena Pajak.
+            </div>
+            <a class="ref-link"
+               href="https://jdih.kemenkeu.go.id/fullText/2015/46TAHUN2015PP.htm"
+               target="_blank" rel="noopener noreferrer">
+              <span class="ref-link-icon">↗</span> jdih.kemenkeu.go.id
+            </a>
+          </div>
+
+          <div class="ref-item" style="border-left-color: var(--ink3)">
+            <div class="ref-item-head">
+              <div class="ref-item-title">Pasal 21 UU PPh (UU No. 36/2008)</div>
+              <span class="ref-badge badge-uu">UU</span>
+            </div>
+            <div class="ref-item-desc">
+              Undang-Undang Pajak Penghasilan. Mengatur pemotongan PPh 21 atas penghasilan
+              karyawan, termasuk ketentuan tarif lebih tinggi 20% bagi wajib pajak tanpa NPWP
+              (Pasal 21 ayat 5a).
+            </div>
+            <a class="ref-link"
+               href="https://jdih.kemenkeu.go.id/fullText/2008/36TAHUN2008UU.htm"
+               target="_blank" rel="noopener noreferrer">
+              <span class="ref-link-icon">↗</span> jdih.kemenkeu.go.id
+            </a>
+          </div>
+
+        </div><!-- /ref-grid -->
+
+        <div class="ref-disclaimer">
+          <strong>⚠ Penting:</strong> Kalkulator ini dibuat berdasarkan peraturan yang berlaku
+          per 2024 dan ditujukan hanya untuk <strong>referensi pribadi</strong>. Untuk kepastian hukum,
+          konsultasikan dengan <strong>konsultan pajak terdaftar</strong> atau kunjungi kantor pajak
+          terdekat. Informasi resmi tersedia di
+          <a href="https://pajak.go.id" target="_blank" rel="noopener noreferrer"
+             style="color:var(--gold);font-weight:600">pajak.go.id</a>.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════ -->
+  <footer>
+    PajakPintar.id · Dibuat untuk referensi pribadi ·
+    Data mengacu UU HPP No. 7/2021 &amp; PMK-101/2016<br>
+    Bukan merupakan konsultasi pajak resmi. Kunjungi
+    <a href="https://pajak.go.id" target="_blank" rel="noopener noreferrer">pajak.go.id</a>
+    untuk informasi resmi.
+  </footer>
+
+  <!-- App script (loaded last so DOM is ready) -->
+  <script src="app.js"></script>
+
+</body>
+</html>
